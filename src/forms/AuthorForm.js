@@ -11,12 +11,27 @@ class AuthorForm extends Component {
       imageUrl: "",
       books: []
     };
+
+    this.onTextChange = this.onTextChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  onTextChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    authorStore.addAuthor(this.state);
+    if (authorStore.success) {
+      this.props.onClose();
+    }
+  }
   render() {
     return (
       <div className="mt-5">
-        <form>
+        <h1>{authorStore.success}</h1>
+        <form onSubmit={this.handleSubmit}>
           <div className="input-group mb-3">
             <div className="input-group-prepend">
               <span className="input-group-text">First Name</span>
@@ -26,6 +41,7 @@ class AuthorForm extends Component {
               className="form-control"
               value={this.state.first_name}
               name="first_name"
+              onChange={this.onTextChange}
             />
           </div>
           <div className="input-group mb-3">
@@ -37,6 +53,7 @@ class AuthorForm extends Component {
               className="form-control"
               value={this.state.last_name}
               name="last_name"
+              onChange={this.onTextChange}
             />
           </div>
           <div className="input-group mb-3">
@@ -48,9 +65,10 @@ class AuthorForm extends Component {
               className="form-control"
               value={this.state.imageUrl}
               name="imageUrl"
+              onChange={this.onTextChange}
             />
           </div>
-          <input type="submit" /> <br />
+          <input onClick={this.handleSubmit} type="submit" /> <br />
         </form>
       </div>
     );

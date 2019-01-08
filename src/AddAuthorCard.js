@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Modal from "react-responsive-modal";
 
 import AuthorForm from "./forms/AuthorForm";
+import authorStore from "./stores/AuthorStore";
 
 class AddAuthorCard extends Component {
   constructor(props) {
@@ -19,15 +20,16 @@ class AddAuthorCard extends Component {
 
   onCloseModal() {
     this.setState({ open: false });
+    authorStore.success = false;
   }
-  
+
   render() {
     const { open } = this.state;
     return (
       <div className="col-lg-4 col-md-6 col-12">
         <div>
           <Modal open={open} onClose={this.onCloseModal} center>
-            <AuthorForm />
+            <AuthorForm onClose={this.onCloseModal} />
           </Modal>
         </div>
         <div className="card" onClick={this.onOpenModal}>

@@ -2,11 +2,12 @@ import React, { Component } from "react";
 
 // Components
 import BookTable from "./BookTable";
+import AddBookModal from "./AddBookModal";
 
 // Stores
 import authorStore from "./stores/AuthorStore";
 import bookStore from "./stores/BookStore";
-
+import BookForm from "./forms/BookForm";
 class AuthorDetail extends Component {
   render() {
     const authorID = this.props.match.params.authorID;
@@ -16,6 +17,7 @@ class AuthorDetail extends Component {
     return (
       <div>
         <div>
+          <AddBookModal authorID={author.id} />
           <h3>{author.first_name + " " + author.last_name}</h3>
           <img
             src={author.imageUrl}

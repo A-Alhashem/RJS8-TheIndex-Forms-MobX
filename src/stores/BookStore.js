@@ -10,6 +10,8 @@ class BookStore {
     this.books = [];
     this.query = "";
     this.loading = true;
+
+    this.addBook = this.addBook.bind(this);
   }
 
   fetchBooks() {
@@ -23,6 +25,18 @@ class BookStore {
       .catch(err => console.error(err));
   }
 
+  addBook(newBook, authorId) {
+    newBook = {
+      ...newBook,
+      authors: [authorId]
+    };
+    return instance
+      .post("/api/books/", newBook)
+      .then(res => res.data)
+      .then(book => {
+        this.books.push(book);
+      });
+  }
   get filteredBooks() {
     return this.books.filter(book => {
       return book.title.toLowerCase().includes(this.query.toLowerCase());
